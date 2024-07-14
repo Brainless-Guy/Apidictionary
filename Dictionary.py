@@ -129,10 +129,6 @@ Button.place(x=425,y=215)
 
 
 
-# Answer
-
-# answer = tk.Label(frame,text="",foreground=f"{clrs[2]}",background=f"{clrs[1]}",font=("Roboto Mono",15))
-# answer.place(x=65,y=300)
 
 
 
