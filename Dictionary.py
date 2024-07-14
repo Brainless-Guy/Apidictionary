@@ -6,6 +6,7 @@ from tkinter import messagebox as msg
 resource.add_font('assets/font.ttf')
 tf = font.load('Roboto Mono')
 
+clrs = ['#ff3d8b',"#00002e",'#ffadad']
 # FUNCTIONS
 
 def clr(e):
@@ -13,7 +14,6 @@ def clr(e):
 def cclr(e):
     Word_input["background"] = f'{clrs[0]}'
 
-clrs = ['#ff3d8b',"#00002e",'#ffadad']
 
 def getWord():
     if Word.get() != "":
@@ -22,8 +22,14 @@ def getWord():
         if info.ok == True:
             response = info.json()
             Definition = f'{response[0]['meanings'][0]["partOfSpeech"]},\n{response[0]['meanings'][0]['definitions'][0]['definition']},\n{response[0]['meanings'][0]['definitions'][0]['synonyms'] if response[0]['meanings'][0]['definitions'][0]['synonyms'] != [] else '' }'
-       
-            answer.config(text=f"{Definition}")
+
+            
+            text.config(state='normal')
+            text.delete("1.0","end")
+            text.config(state='disabled')
+            text.config(state='normal')
+            text.insert("end",Definition)
+            text.config(state='disabled')
         else:
             msg.showerror("Word Invalid","Word Cannot be found , Please Type The Word Correctly!!")
         Word_input.delete(0,END)
@@ -46,12 +52,12 @@ def theme(w):
         Word_input['background'] =f"{clrs[0]}"
         Button['background'] = f"{clrs[1]}"
         Button['activebackground']=f"{clrs[1]}"
-        answer['foreground'] = f"{clrs[2]}"
-        answer['background'] = f"{clrs[1]}"
+        text['foreground'] = f"{clrs[2]}"
+        text['background'] = f"{clrs[1]}"
         settings['bg'] = f"{clrs[1]}"
         settings['activebackground'] =f"{clrs[1]}"
     elif themes.get() == "Phonk":
-        clrs = ['#859900','#002b36','#859900']
+        clrs = ['#2ca89e','#002b36','#859900']
         root.configure(background=f"{clrs[0]}")
         frame['bg'] = f"{clrs[1]}"
         frame['highlightbackground'] = f"{clrs[1]}"
@@ -63,8 +69,8 @@ def theme(w):
         Word_input['background'] =f"{clrs[0]}"
         Button['background'] = f"{clrs[1]}"
         Button['activebackground']=f"{clrs[1]}"
-        answer['foreground'] = f"{clrs[2]}"
-        answer['background'] = f"{clrs[1]}"
+        text['foreground'] = f"{clrs[2]}"
+        text['background'] = f"{clrs[1]}"
         settings['bg'] = f"{clrs[1]}"
         settings['activebackground'] =f"{clrs[1]}"
     else:
@@ -80,8 +86,8 @@ def theme(w):
         Word_input['background'] =f"{clrs[0]}"
         Button['background'] = f"{clrs[1]}"
         Button['activebackground']=f"{clrs[1]}"
-        answer['foreground'] = f"{clrs[2]}"
-        answer['background'] = f"{clrs[1]}"
+        text['foreground'] = f"{clrs[2]}"
+        text['background'] = f"{clrs[1]}"
         settings['bg'] = f"{clrs[1]}"
         settings['activebackground'] =f"{clrs[1]}"
 # GUI
@@ -91,7 +97,7 @@ root.geometry("577x544")
 root.title("Dictionary Search")
 root.iconbitmap("assets/icon.ico")
 
-
+root.maxsize(577,544)
 root.configure(background=f"{clrs[0]}")
 
 frame = tk.Frame(root,bg=f"{clrs[1]}",relief="groove",border=3,highlightbackground=f"{clrs[1]}")
@@ -110,7 +116,7 @@ Label.place(x=65,y=145)
 
 Word = tk.StringVar()
 Word_input = tk.Entry(textvariable=Word,foreground=f"{clrs[1]}",background=f"{clrs[0]}",font=("Roboto Mono",15))
-Word_input.place(x=65,y=225,width = 300)
+Word_input.place(x=65,y=225,width = 350)
 Word_input.bind("<Enter>",clr)
 Word_input.bind("<Leave>",cclr)
 
@@ -119,14 +125,34 @@ Word_input.bind("<Leave>",cclr)
 
 img_btn = tk.PhotoImage(file="assets/button.png")
 Button = tk.Button(image=img_btn,border=0,command=getWord,background=f"{clrs[1]}",activebackground=f"{clrs[1]}")
-Button.place(x=375,y=215)
+Button.place(x=425,y=215)
 
 
 
 # Answer
 
-answer = tk.Label(frame,text="",foreground=f"{clrs[2]}",background=f"{clrs[1]}",font=("Roboto Mono",15))
-answer.place(x=65,y=300)
+# answer = tk.Label(frame,text="",foreground=f"{clrs[2]}",background=f"{clrs[1]}",font=("Roboto Mono",15))
+# answer.place(x=65,y=300)
+
+
+
+
+# text
+
+
+
+text = tk.Text(root,background=f"{clrs[1]}",foreground=f"{clrs[2]}",font=("Georgia",15),state='normal')
+scrolly = tk.Scrollbar(text,background=f"{clrs[1]}",activebackground=f"{clrs[0]}",highlightbackground=f'{clrs[1]}',highlightcolor=f'{clrs[0]}',highlightthickness=2,command=text.yview)
+text.place(x=55,y=280,width=450,height=150)
+scrolly.pack(side="right",fill='y'   )
+
+
+
+
+
+
+
+
 
 
 # Theme CHANGER
