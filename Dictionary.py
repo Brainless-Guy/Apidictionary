@@ -15,7 +15,7 @@ def cclr(e):
     Word_input["background"] = f'{clrs[0]}'
 
 
-def getWord():
+def getWord(e = None):
     if Word.get() != "":
         import requests
         info = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{Word.get()}")
@@ -128,6 +128,7 @@ Button = tk.Button(image=img_btn,border=0,command=getWord,background=f"{clrs[1]}
 Button.place(x=425,y=215)
 
 
+root.bind('<Return>',func=getWord)
 
 
 
@@ -161,7 +162,7 @@ settings.place(x=30,y=440)
 
 brush =  tk.PhotoImage(file="assets/brush.png")
 
-settings.config(image=brush,bg=f"{clrs[1]}",activebackground=f"{clrs[1]}")
+settings.config(image=brush,bg=f"{clrs[1]}",activebackground=f"{clrs[1]}",borderwidth=0)
 
 # Close
 cross = tk.PhotoImage(file="assets/cross.png")
